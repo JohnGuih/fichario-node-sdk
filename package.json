@@ -1,5 +1,5 @@
 {
-  "name": "@johnguih/fichario-node-sdk",
+  "name": "fichario-node-sdk",
   "version": "1.0.0",
   "description": "SDK for fichar.io API",
   "main": "dist/index.js",
