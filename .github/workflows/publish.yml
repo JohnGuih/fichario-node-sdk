@@ -20,6 +20,6 @@ jobs:
         env:
           FICHARIO_EMAIL_MASTER: ${{ secrets.FICHARIO_EMAIL_MASTER }}
           FICHARIO_PASSWORD_MASTER: ${{ secrets.FICHARIO_PASSWORD_MASTER }}
-      - run: npm publish
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
