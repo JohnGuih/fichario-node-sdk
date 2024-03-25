@@ -177,10 +177,16 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDeviceInfos(deviceID: string): Promise<Array<DeviceInfoType>> {
+    async getDeviceInfos(deviceID: string, {complete = false, startDate = "", endDate = ""}): Promise<Array<DeviceInfoType>> {
+        let endpoint = `/admin/companies/${this.company}/devices/${deviceID}/data/deviceInfo`;
+        const params = [];
+        if (complete) params.push("complete=true");
+        if (startDate) params.push(`startDate=${startDate}`);
+        if (endDate) params.push(`endDate=${endDate}`);
+        if (params.length) endpoint += "?" + params.join("&");
         const options: RequestOptionsType = {
             method: 'GET',
-            path: `/admin/companies/${this.company}/devices/${deviceID}/data/deviceInfo`,
+            path: endpoint,
         };
 
         let response: Array<DeviceInfoType>;
