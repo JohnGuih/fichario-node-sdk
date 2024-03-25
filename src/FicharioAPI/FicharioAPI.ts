@@ -177,15 +177,8 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDeviceInfos(deviceID: string, {complete = false, startDate = "", endDate = ""} = {}): Promise<Array<DeviceInfoType>> {
+    async getDeviceInfos(deviceID: string): Promise<Array<DeviceInfoType>> {
         let endpoint = `/admin/companies/${this.company}/devices/${deviceID}/data/deviceInfo`;
-    
-        const params = new URLSearchParams();
-        if (complete) params.append('complete', 'true');
-        if (startDate) params.append('startDate', startDate);
-        if (endDate) params.append('endDate', endDate);
-    
-        if (params.toString()) endpoint += '?' + params.toString();
 
         const options: RequestOptionsType = {
             method: 'GET',
@@ -208,10 +201,19 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDevicePayloads(deviceID: string): Promise<Array<DevicePayloadType>> {
+    async getDevicePayloads(deviceID: string, {complete = false, startDate = "", endDate = ""} = {}): Promise<Array<DevicePayloadType>> {
+        let endpoint = `/admin/companies/${this.company}/devices/${deviceID}/data/payload`;
+    
+        const params = new URLSearchParams();
+        if (complete) params.append('complete', 'true');
+        if (startDate) params.append('startDate', startDate);
+        if (endDate) params.append('endDate', endDate);
+    
+        if (params.toString()) endpoint += '?' + params.toString();
+
         const options: RequestOptionsType = {
             method: 'GET',
-            path: `/admin/companies/${this.company}/devices/${deviceID}/data/payload`,
+            path: endpoint,
         };
 
         let response: Array<DevicePayloadType>;
