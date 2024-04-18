@@ -168,12 +168,12 @@ class FicharioAPI implements FicharioAPIType {
             throw error;
         }
 
-        try{
+        try {
             response = deviceSchema.array().parse(response);
         } catch (error) {
             throw error;
         }
-        
+
         return response;
     }
 
@@ -191,7 +191,7 @@ class FicharioAPI implements FicharioAPIType {
         } catch (error) {
             throw error;
         }
-        
+
         try {
             response = deviceInfoSchema.array().parse(response);
         } catch (error) {
@@ -201,14 +201,16 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDevicePayloads(deviceID: string, {complete = false, startDate = "", endDate = ""} = {}): Promise<Array<DevicePayloadType>> {
-        let endpoint = `/admin/companies/${this.company}/devices/${deviceID}/data/payload`;
-    
+    async getDevicePayloads(deviceID: string, { complete = false, startDate = "", endDate = "" } = {}, { admin = true } = {}): Promise<Array<DevicePayloadType>> {
+        let endpoint = admin ?
+            `/admin/companies/${this.company}/devices/${deviceID}/data/payload` :
+            `/data/payloads/${deviceID}`;
+
         const params = new URLSearchParams();
         if (complete) params.append('complete', 'true');
         if (startDate) params.append('startDate', startDate);
         if (endDate) params.append('endDate', endDate);
-    
+
         if (params.toString()) endpoint += '?' + params.toString();
 
         const options: RequestOptionsType = {
@@ -222,7 +224,7 @@ class FicharioAPI implements FicharioAPIType {
         } catch (error) {
             throw error;
         }
-        
+
         try {
             response = devicePayloadSchema.array().parse(response);
         } catch (error) {

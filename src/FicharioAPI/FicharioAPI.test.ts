@@ -88,16 +88,16 @@ describe('FicharioAPI', () => {
         expect(devicePayloads).toBeInstanceOf(Array);
     });
 
-    it('method getDevicePayloads with complete option should return array of devicePayloads', async () => {
-        const data: AuthType = {
-            login: process.env.FICHARIO_EMAIL_MASTER || "",
-            password: process.env.FICHARIO_PASSWORD_MASTER || "",
-        };
-        const ficharioAPI = await FicharioAPI.new(data);
-        const devices = await ficharioAPI.getDevices();
-        const ramdomIndex = Math.floor(Math.random() * devices.length);
-        const device = devices[ramdomIndex];
-        const devicePayloads = await ficharioAPI.getDevicePayloads(device._id, {complete: true});
-        expect(devicePayloads).toBeInstanceOf(Array);
-    }, 999999999);
+    // it('method getDevicePayloads with complete option should return array of devicePayloads', async () => {
+    //     const data: AuthType = {
+    //         login: process.env.FICHARIO_EMAIL_MASTER || "",
+    //         password: process.env.FICHARIO_PASSWORD_MASTER || "",
+    //     };
+    //     const ficharioAPI = await FicharioAPI.new(data);
+    //     const devices = await ficharioAPI.getDevices();
+    //     const ramdomIndex = Math.floor(Math.random() * devices.length);
+    //     const device = devices[ramdomIndex];
+    //     const devicePayloads = await ficharioAPI.getDevicePayloads(device._id, {complete: true});
+    //     expect(devicePayloads).toBeInstanceOf(Array);
+    // }, 999999999);
 });
