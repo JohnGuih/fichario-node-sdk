@@ -62,18 +62,18 @@ export const deviceSchema = z.object({
 export type DeviceType = z.infer<typeof deviceSchema>;
 
 export const deviceInfoSchema = z.object({
-    _id: z.string(),
+    _id: z.string().nullable(),
     altitude: z.number().nullable(),
-    createdAt: z.string(),
-    device: z.string(),
-    flag: z.string(),
-    ip: z.string(),
+    createdAt: z.string().nullable(),
+    device: z.string().nullable(),
+    flag: z.string().nullable(),
+    ip: z.string().nullable(),
     latitude: z.number().nullable(),
     longitude: z.number().nullable(),
-    mqttMsg: z.string(),
+    mqttMsg: z.string().nullable(),
     orientation: z.number().nullable(),
-    timezone: z.number(),
-    uptime: z.number(),
+    timezone: z.number().nullable(),
+    uptime: z.number().nullable(),
 });
 export type DeviceInfoType = z.infer<typeof deviceInfoSchema>;
 

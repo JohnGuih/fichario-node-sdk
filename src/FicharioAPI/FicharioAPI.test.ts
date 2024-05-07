@@ -1,7 +1,7 @@
 // i want to test the FicharioAPI class
 
 import FicharioAPI from './FicharioAPI';
-import { AuthType } from './FicharioAPI.types';
+import { AuthType, deviceInfoSchema } from './FicharioAPI.types';
 import { describe, it, expect } from 'vitest';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -72,6 +72,8 @@ describe('FicharioAPI', () => {
         const ramdomIndex = Math.floor(Math.random() * devices.length);
         const device = devices[ramdomIndex];
         const deviceInfos = await ficharioAPI.getDeviceInfos(device._id);
+        console.log(deviceInfos)
+        await deviceInfoSchema.array().parse(deviceInfos);
         expect(deviceInfos).toBeInstanceOf(Array);
     });
 
