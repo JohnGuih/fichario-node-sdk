@@ -208,7 +208,7 @@ class FicharioAPI implements FicharioAPIType {
 
         const params = new URLSearchParams();
         if (complete) params.append('complete', 'true');
-        if (startDate) params.append('startDate', startDate);
+        if (startDate) params.append('strDate', startDate);
         if (endDate) params.append('endDate', endDate);
 
         if (params.toString()) endpoint += '?' + params.toString();
