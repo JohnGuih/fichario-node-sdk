@@ -201,7 +201,7 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDevicePayloads(deviceID: string, { complete = false, startDate = "", endDate = "" } = {}, { admin = true } = {}): Promise<Array<DevicePayloadType>> {
+    async getDevicePayloads(deviceID: string, { complete = false, startDate = "", endDate = "", debug = false } = {}, { admin = true } = {}): Promise<Array<DevicePayloadType>> {
         let endpoint = admin ?
             `/admin/companies/${this.company}/devices/${deviceID}/data/payload` :
             `/data/payloads/${deviceID}`;
@@ -212,6 +212,8 @@ class FicharioAPI implements FicharioAPIType {
         if (endDate) params.append('endDate', endDate);
 
         if (params.toString()) endpoint += '?' + params.toString();
+        
+        if (debug) console.log("FICHARIO: Request URL endpoint - ", endpoint)
 
         const options: RequestOptionsType = {
             method: 'GET',
@@ -220,6 +222,7 @@ class FicharioAPI implements FicharioAPIType {
 
         let response: Array<DevicePayloadType>;
         try {
+            if (debug) console.log("FICHARIO: Request options - ", options)
             response = await this.request(options) as Array<DevicePayloadType>;
         } catch (error) {
             throw error;
