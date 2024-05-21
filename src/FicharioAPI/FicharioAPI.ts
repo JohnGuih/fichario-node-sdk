@@ -8,9 +8,9 @@ class FicharioAPI implements FicharioAPIType {
     token: string;
     company: string;
 
-    constructor() {
-        this.token = "";
-        this.company = "";
+    constructor({token = "", company = ""} = {}) {
+        this.token = token;
+        this.company = company;
     }
 
     static async new(data: AuthType): Promise<FicharioAPI> {
