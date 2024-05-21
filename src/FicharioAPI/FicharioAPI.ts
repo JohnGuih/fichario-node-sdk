@@ -1,5 +1,5 @@
 import { AuthExpectedType, AuthType, DeviceInfoType, DevicePayloadType, DeviceType, FicharioAPISchema, FicharioAPIType, RequestOptionsType, UserType, authExpectedSchema, authSchema, deviceInfoSchema, devicePayloadSchema, deviceSchema, getCompaniesExpectedSchema, getCompaniesExpectedType, requestOptionsSchema, userSchema } from './FicharioAPI.types';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import dotenv from 'dotenv';
 import { A } from 'vitest/dist/reporters-P7C2ytIv';
 dotenv.config();
@@ -112,7 +112,25 @@ class FicharioAPI implements FicharioAPIType {
             // console.log(`Fazendo requisição para ${options.method} ${url}`)
             // if (options.data) console.log(`Com dados: ${JSON.stringify(options.data)}`)
 
-            const response = await axios(config).catch((error) => {
+            const response = await this.makeRequest(config);
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async makeRequest(config: any, retries = 3): Promise<AxiosResponse<any, any>> {
+        try {
+            const response = await axios(config);
+            return response;
+        } catch (error: any) {
+            if (retries > 0 && error.response && (error.response.status === 502 || error.response.status === 429)) {
+                console.error(`Erro na requisição: ${error.response.status} - ${error.response.statusText}`);
+                console.error('Retrying in 10 seconds...');
+                await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 10 seconds
+                return this.makeRequest(config, retries - 1);
+            } else {
                 if (error.response) {
                     console.error(`Erro na requisição: ${error.response.status} - ${error.response.statusText}`);
                     console.error(error.response.data)
@@ -124,11 +142,7 @@ class FicharioAPI implements FicharioAPIType {
                 throw {
                     error: "Falha na requisição ao Fichário",
                 }
-            });
-
-            return response.data;
-        } catch (error) {
-            throw error;
+            }
         }
     }
 
