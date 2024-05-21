@@ -120,7 +120,7 @@ class FicharioAPI implements FicharioAPIType {
         }
     }
 
-    async makeRequest(config: any, retries = 3): Promise<AxiosResponse<any, any>> {
+    async makeRequest(config: any, retries = 6): Promise<AxiosResponse<any, any>> {
         try {
             const response = await axios(config);
             return response;
