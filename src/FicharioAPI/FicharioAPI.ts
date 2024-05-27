@@ -8,7 +8,7 @@ class FicharioAPI implements FicharioAPIType {
     token: string;
     company: string;
 
-    constructor({token = "", company = ""} = {}) {
+    constructor({ token = "", company = "" } = {}) {
         this.token = token;
         this.company = company;
     }
@@ -191,8 +191,10 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDeviceInfos(deviceID: string): Promise<Array<DeviceInfoType>> {
-        let endpoint = `/admin/companies/${this.company}/devices/${deviceID}/data/deviceInfo`;
+    async getDeviceInfos(deviceID: string, { admin = true } = {}): Promise<Array<DeviceInfoType>> {
+        let endpoint = admin ?
+            `/admin/companies/${this.company}/devices/${deviceID}/data/deviceInfo` :
+            `/data/deviceinfos/${deviceID}` ;
 
         const options: RequestOptionsType = {
             method: 'GET',
@@ -226,7 +228,7 @@ class FicharioAPI implements FicharioAPIType {
         if (endDate) params.append('endDate', endDate);
 
         if (params.toString()) endpoint += '?' + params.toString();
-        
+
         if (debug) console.log("FICHARIO: Request URL endpoint - ", endpoint)
 
         const options: RequestOptionsType = {
