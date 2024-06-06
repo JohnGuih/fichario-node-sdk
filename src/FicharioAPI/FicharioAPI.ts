@@ -169,7 +169,7 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDevices({ admin = true }: { admin: boolean }): Promise<Array<DeviceType>> {
+    async getDevices({ admin = true } = {}): Promise<Array<DeviceType>> {
         const endpoint = admin ?
             `/admin/companies/${this.company}/devices/list` :
             `/devices`;
