@@ -169,10 +169,13 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDevices(): Promise<Array<DeviceType>> {
+    async getDevices({ admin = true }: { admin: boolean }): Promise<Array<DeviceType>> {
+        const endpoint = admin ?
+            `/admin/companies/${this.company}/devices/list` :
+            `/devices`;
         const options: RequestOptionsType = {
             method: 'GET',
-            path: `/admin/companies/${this.company}/devices/list`,
+            path: endpoint,
         };
 
         let response: Array<DeviceType>;
@@ -194,7 +197,7 @@ class FicharioAPI implements FicharioAPIType {
     async getDeviceInfos(deviceID: string, { admin = true } = {}): Promise<Array<DeviceInfoType>> {
         let endpoint = admin ?
             `/admin/companies/${this.company}/devices/${deviceID}/data/deviceInfo` :
-            `/data/deviceinfos/${deviceID}` ;
+            `/data/deviceinfos/${deviceID}`;
 
         const options: RequestOptionsType = {
             method: 'GET',
