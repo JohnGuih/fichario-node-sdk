@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { boolean, z } from 'zod';
 
 export const FicharioAPISchema = z.object({
     token: z.string(),
@@ -89,3 +89,12 @@ export const devicePayloadSchema = z.object({
     des: z.string(),
 });
 export type DevicePayloadType = z.infer<typeof devicePayloadSchema>;
+
+export type getDevicePayloadsType = { 
+    deviceID: string
+    complete?: boolean
+    startDate?: string
+    endDate?: string
+    debug?: boolean
+    admin?: boolean 
+}

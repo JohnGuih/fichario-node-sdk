@@ -1,4 +1,4 @@
-import { AuthExpectedType, AuthType, DeviceInfoType, DevicePayloadType, DeviceType, FicharioAPISchema, FicharioAPIType, RequestOptionsType, UserType, authExpectedSchema, authSchema, deviceInfoSchema, devicePayloadSchema, deviceSchema, getCompaniesExpectedSchema, getCompaniesExpectedType, requestOptionsSchema, userSchema } from './FicharioAPI.types';
+import { AuthExpectedType, AuthType, DeviceInfoType, DevicePayloadType, DeviceType, FicharioAPISchema, FicharioAPIType, RequestOptionsType, UserType, authExpectedSchema, authSchema, deviceInfoSchema, devicePayloadSchema, deviceSchema, getCompaniesExpectedSchema, getCompaniesExpectedType, getDevicePayloadsType, requestOptionsSchema, userSchema } from './FicharioAPI.types';
 import axios, { AxiosResponse } from 'axios';
 import dotenv from 'dotenv';
 import { A } from 'vitest/dist/reporters-P7C2ytIv';
@@ -194,7 +194,9 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDeviceInfos(deviceID: string, { admin = true } = {}): Promise<Array<DeviceInfoType>> {
+    async getDeviceInfos({ deviceID, admin = true }: {deviceID: string, admin?: boolean}): Promise<Array<DeviceInfoType>> {
+        if (!deviceID) throw new Error("getDeviceInfos ERROR: deviceID missing");
+
         let endpoint = admin ?
             `/admin/companies/${this.company}/devices/${deviceID}/data/deviceInfo` :
             `/data/deviceinfos/${deviceID}`;
@@ -220,7 +222,9 @@ class FicharioAPI implements FicharioAPIType {
         return response;
     }
 
-    async getDevicePayloads(deviceID: string, { complete = false, startDate = "", endDate = "", debug = false } = {}, { admin = true } = {}): Promise<Array<DevicePayloadType>> {
+    async getDevicePayloads({ deviceID, complete = false, startDate = "", endDate = "", debug = false, admin = true }: getDevicePayloadsType ): Promise<Array<DevicePayloadType>> {
+        if (!deviceID) throw new Error("getDevicePayloads ERROR: deviceID missing");
+
         let endpoint = admin ?
             `/admin/companies/${this.company}/devices/${deviceID}/data/payload` :
             `/data/payloads/${deviceID}`;

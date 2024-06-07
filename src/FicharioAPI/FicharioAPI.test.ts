@@ -19,7 +19,7 @@ describe('FicharioAPI', () => {
 
         expect(ficharioAPI.token).toBeTruthy();
     });
-    
+
     it('method getCompany() should add company ID to FicharioAPI instance', async () => {
         const data: AuthType = {
             login: process.env.FICHARIO_EMAIL_MASTER || "",
@@ -71,7 +71,8 @@ describe('FicharioAPI', () => {
         const devices = await ficharioAPI.getDevices();
         const ramdomIndex = Math.floor(Math.random() * devices.length);
         const device = devices[ramdomIndex];
-        const deviceInfos = await ficharioAPI.getDeviceInfos(device._id);
+        const deviceID = device._id
+        const deviceInfos = await ficharioAPI.getDeviceInfos({ deviceID });
         console.log(deviceInfos)
         await deviceInfoSchema.array().parse(deviceInfos);
         expect(deviceInfos).toBeInstanceOf(Array);
@@ -86,7 +87,8 @@ describe('FicharioAPI', () => {
         const devices = await ficharioAPI.getDevices();
         const ramdomIndex = Math.floor(Math.random() * devices.length);
         const device = devices[ramdomIndex];
-        const devicePayloads = await ficharioAPI.getDevicePayloads(device._id);
+        const deviceID = device._id
+        const devicePayloads = await ficharioAPI.getDevicePayloads({ deviceID });
         expect(devicePayloads).toBeInstanceOf(Array);
     });
 
