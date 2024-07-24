@@ -126,7 +126,7 @@ class FicharioAPI implements FicharioAPIType {
             return response;
         } catch (error: any) {
             if (retries > 0 && error.response && (error.response.status === 502 || error.response.status === 429)) {
-                console.error(`Erro na requisição: ${error.response.status} - ${error.response.statusText}`);
+                console.error(`Erro na requisição ${config.path}: ${error.response.status} - ${error.response.statusText}`);
                 console.error('Retrying in 10 seconds...');
                 await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 10 seconds
                 return this.makeRequest(config, retries - 1);
