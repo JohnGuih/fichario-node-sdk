@@ -133,7 +133,7 @@ class FicharioAPI implements FicharioAPIType {
                 return this.makeRequest(config, retries - 1);
             } else {
                 if (error.response) {
-                    console.error(`Erro na requisição: ${error.response.status} - ${error.response.statusText}`);
+                    console.error(`Erro na requisição "${config?.path}": ${error.response.status} - ${error.response.statusText}`);
                     console.log('Token:', this.token);
                     console.log('Company:', this.company);
                     console.error(error.response.data)
