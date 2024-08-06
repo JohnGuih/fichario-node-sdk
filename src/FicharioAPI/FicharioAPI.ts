@@ -9,7 +9,7 @@ class FicharioAPI implements FicharioAPIType {
     company: string;
 
     constructor({ token = "", company = "" } = {}) {
-        this.token = token;
+        this.token = token.replace(/[\'\/]/g, '');
         this.company = company;
     }
 
@@ -59,7 +59,7 @@ class FicharioAPI implements FicharioAPIType {
         }
 
         try {
-            this.token = response.token;
+            this.token = response.token.replace(/[\'\/]/g, '');
             return this;
         } catch (error) {
             throw error;
