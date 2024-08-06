@@ -137,6 +137,7 @@ class FicharioAPI implements FicharioAPIType {
                     console.log('Token:', this.token);
                     console.log('Company:', this.company);
                     console.error(error.response.data)
+                    console.error(config)
                 } else if (error.request) {
                     console.error(`Erro na requisição: ${error.request}`);
                 } else {
