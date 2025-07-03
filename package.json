@@ -1,6 +1,6 @@
 {
   "name": "fichario-node-sdk",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "SDK for fichar.io API",
   "main": "dist/index.js",
   "scripts": {
