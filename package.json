@@ -7,7 +7,12 @@
     "start": "node dist/index.js",
     "start:dev": "tsx watch src/index.ts --no-sourcemap",
     "build": "tsup src --no-sourcemap",
-    "test": "vitest --retry=3"
+    "test": "vitest --retry=3",
+    "test:unit": "vitest unit --retry=3",
+    "test:integration": "vitest integration --retry=3",
+    "test:watch": "vitest --watch --retry=3",
+    "test:coverage": "vitest --coverage --retry=3",
+    "test:ui": "vitest --ui"
   },
   "keywords": [],
   "author": "João Guilherme Pessanha Alves",
